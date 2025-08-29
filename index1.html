@@ -1,0 +1,837 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Document</title>
+
+  <!-- Icon/animation libs you already used -->
+  <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/3.0.0/uicons-solid-rounded/css/uicons-solid-rounded.css"/>
+  <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/3.0.0/uicons-regular-rounded/css/uicons-regular-rounded.css"/>
+  <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/3.0.0/uicons-regular-straight/css/uicons-regular-straight.css"/>
+  <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/3.0.0/uicons-thin-rounded/css/uicons-thin-rounded.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+  <!-- Global Theme & Utilities -->
+  <style>
+    :root{
+      --bg:#0f1115;
+      --surface:#141720;
+      --card:#171a24;
+      --muted:#8b93a7;
+      --text:#e9ecf1;
+      --brand:#F34D4D;
+      --brand-2:#30318B;
+      --ring: rgba(243,77,77,.35);
+      --radius:14px;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --shadow-soft: 0 6px 22px rgba(0,0,0,.25);
+    }
+    @media (prefers-reduced-motion: reduce){
+      *{animation: none !important; transition: none !important; scroll-behavior: auto !important;}
+    }
+    html{scroll-behavior:smooth;}
+    body{
+      margin:0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background:
+        radial-gradient(1200px 600px at 70% -10%, rgba(48,49,139,.16), transparent 60%),
+        radial-gradient(800px 500px at 10% 110%, rgba(243,77,77,.12), transparent 60%),
+        var(--bg);
+      color: var(--text);
+    }
+    img{border-radius: calc(var(--radius) - 4px); display:block; max-width:100%;}
+    .glass{
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.01));
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,.08);
+    }
+    .elevate{box-shadow: var(--shadow);}
+    .soft{box-shadow: var(--shadow-soft);}
+    .ring{box-shadow: 0 0 0 8px var(--ring);}
+    .container{max-width:1200px; margin:0 auto; padding:0 16px;}
+    h1,h2,h3,p{margin:0;}
+  </style>
+
+  <!-- Header -->
+  <style>
+    .header{
+      position: sticky; top:0; z-index:1000; background: transparent; padding: 10px 0;
+    }
+    .header .wrap{
+      max-width:1200px; margin:0 auto; padding:10px 16px; display:flex; align-items:center; justify-content:space-between;
+    }
+    .header .wrap.glass{border-radius: var(--radius);}
+    .header1 img{height:42px; object-fit:contain;}
+    .options{display:flex; gap:18px; align-items:center; color: var(--text);}
+    .options h3{
+      margin:0; font-weight:600; font-size:15px; color:#d9dce5; position:relative; cursor:pointer;
+    }
+    .options h3::after{
+      content:""; position:absolute; left:0; bottom:-6px; height:2px; width:0%;
+      background: linear-gradient(90deg, var(--brand), var(--brand-2));
+      transition: width .25s ease;
+    }
+    .options h3:hover::after{width:100%;}
+    .options img{height:22px; filter: invert(90%); cursor:pointer;}
+    .nav-pill{
+      padding:6px 10px; border-radius:10px; background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.08);
+    }
+  </style>
+
+  <!-- Right Sidebar (Quick Actions) -->
+  <style>
+    .right-sidebar{
+      position: fixed; right: 20px; bottom: 24px; z-index: 1200;
+      display:flex; flex-direction:column; gap:12px;
+    }
+    .sidebar-btn{
+      width:52px; height:52px; border-radius:14px; background: rgba(20,23,32,.85);
+      border:1px solid rgba(255,255,255,.08); display:flex; align-items:center; justify-content:center;
+      cursor:pointer; transition: transform .15s ease, background .2s ease, border-color .2s ease;
+      box-shadow: var(--shadow-soft); position:relative;
+    }
+    .sidebar-btn:hover{transform: translateY(-2px); background: rgba(20,23,32,.95); border-color: rgba(243,77,77,.45);}
+    .sidebar-btn svg{width:24px; height:24px; stroke:#d9dce5; stroke-width:1.8; fill:none;}
+    .sidebar-btn .tooltip{
+      position:absolute; right:62px; top:50%; transform: translateY(-50%);
+      background:#1b1f2a; color:#e9ecf1; border:1px solid rgba(255,255,255,.08);
+      padding:6px 10px; border-radius:10px; font-size:12px; white-space:nowrap; opacity:0; visibility:hidden;
+      transition: opacity .2s ease, transform .2s ease;
+    }
+    .sidebar-btn:hover .tooltip{opacity:1; visibility:visible; transform: translateY(-50%) translateX(-2px);}
+  </style>
+
+  <!-- Hero / Page1 -->
+  <style>
+    .page1{
+      display:grid; grid-template-columns: 1.1fr .9fr; gap:28px; margin: 24px auto; padding: 0 16px; max-width:1200px; background: transparent;
+    }
+    .sec1{display:flex; flex-direction:column; gap:12px;}
+    .promo-card{
+      position:relative; overflow:hidden; border-radius: var(--radius); padding: 36px 32px;
+      background: linear-gradient(160deg, rgba(243,77,77,.14), rgba(48,49,139,.12) 60%, rgba(255,255,255,.04));
+      border:1px solid rgba(255,255,255,.08); box-shadow: var(--shadow); text-align:center;
+    }
+    .promo-card h1{font-size: clamp(28px, 4vw, 44px); margin:0 0 10px; color:#fff;}
+    .promo-card p{color: var(--muted); margin:0 0 18px;}
+    .promo-card a{
+      display:inline-flex; align-items:center; gap:10px; padding:14px 18px; border-radius:12px;
+      background: linear-gradient(90deg, var(--brand), #ff7a5c); color:white; border: none; font-weight:700;
+      box-shadow: 0 8px 24px rgba(243,77,77,.35); transition: transform .15s ease, box-shadow .2s ease;
+    }
+    .promo-card a:hover{transform: translateY(-2px); box-shadow: 0 12px 30px rgba(243,77,77,.45);}
+    .sec2 > div > img{border-radius: var(--radius); box-shadow: var(--shadow);}
+  </style>
+
+  <!-- Services Strip -->
+  <style>
+    .container2{
+      max-width:1200px; margin: 0 auto; gap: 18px; padding: 28px 16px; display:flex; justify-content: space-between; background: transparent;
+      overflow:hidden;
+    }
+    .container2 .sec1, .container2 .sec2, .container2 .sec3{
+      display:flex; gap:12px; align-items:flex-start; background: var(--card); border:1px solid rgba(255,255,255,.08);
+      padding:14px 16px; border-radius: var(--radius); flex:1; min-width: 260px; box-shadow: var(--shadow-soft);
+    }
+    .container2 i{font-size:28px; color: var(--brand); background: rgba(243,77,77,.12); padding:10px; border-radius:12px;}
+    .container2 h3{margin: 0 0 6px; color:#fff;}
+    .container2 p{margin:0; color: var(--muted);}
+  </style>
+
+  <!-- Split Feature (Season) -->
+  <style>
+    .container3{
+      max-width:1200px; margin: 16px auto; display:grid; grid-template-columns:1fr 1fr; gap: 20px; padding: 0 16px;
+    }
+    .slide1, .slide2{display:flex; align-items:center; justify-content:center;}
+    .slide1 > div > div{
+      display:flex; justify-content:center; border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06); color: #fff; padding: 10px 14px; border-radius: 12px;
+      cursor:pointer; transition: background .2s;
+    }
+    .slide1 > div > div:hover{background: rgba(255,255,255,.12);}
+    .slide2 img{width:100%; height:100%; object-fit:cover; border-radius: var(--radius);}
+  </style>
+
+  <!-- Latest Collection / Product Cards -->
+  <style>
+    .container4{display:flex; flex-direction:column; justify-content:center; gap:10px;}
+    .container4 .head4{display:flex; justify-content:center;}
+    .container4 .head4 h1, .container4 .head4 h3{color:#fff;}
+    .c4img{display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:20px; padding: 20px;}
+    .product-card{
+      width: 100%; max-width: 320px; margin: 0 auto; background: var(--card);
+      border:1px solid rgba(255,255,255,.06); border-radius: var(--radius); overflow:hidden;
+      transition: transform .18s ease, box-shadow .2s ease, border-color .2s ease;
+      display:flex; flex-direction:column;
+    }
+    .product-card:hover{transform: translateY(-4px); box-shadow: var(--shadow); border-color: rgba(243,77,77,.3);}
+    .img1{position:relative; width:100%; aspect-ratio:4/5; overflow:hidden; border-radius:0;}
+    .img1 img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transition: opacity .35s ease;}
+    .main-img{opacity:1;}
+    .hover-img{opacity:0;}
+    .img1:hover .main-img{opacity:0;}
+    .img1:hover .hover-img{opacity:1;}
+    .product-desc{color:#fff; margin: 14px 14px 6px; text-transform: capitalize; text-align:left; font-size:1rem;}
+    .c4b{display:none;} /* Hidden old row */
+    .price-row{display:flex; align-items:center; justify-content: space-between; padding: 0 14px 14px;}
+    .price{color:#fff; font-weight:700;}
+    .stars{color:#ffb947; font-size:14px; letter-spacing:1px;}
+    .quick{
+      position:absolute; top:10px; right:10px; display:flex; flex-direction:column; gap:8px; opacity:0;
+      transform: translateY(-6px); transition: .2s ease; z-index:4;
+    }
+    .quick button{
+      width:38px; height:38px; border-radius:10px; background: rgba(20,23,32,.9);
+      border:1px solid rgba(255,255,255,.08); color:#e9ecf1; cursor:pointer;
+    }
+    .img1:hover .quick{opacity:1; transform: translateY(0);}
+  </style>
+
+  <!-- Countdown Deal Section -->
+  <style>
+    .container5{
+      max-width:1200px; margin: 40px auto; min-height:auto; padding: 0 16px;
+      display:grid; grid-template-columns: 1fr 1.2fr 1fr; gap: 20px; align-items:center;
+    }
+    .center-content{
+      max-width:100%; background: linear-gradient(135deg, rgba(243,77,77,.14), rgba(48,49,139,.12));
+      border:1px solid rgba(255,255,255,.08); border-radius: var(--radius);
+      padding: 24px; box-shadow: var(--shadow); text-align:center; color:#fff;
+    }
+    .center-content h1{color:#fff; font-size: 2rem; margin-bottom: 8px;}
+    .subheadline{color: var(--muted); font-size:1rem; margin-bottom: 16px;}
+    .highlight{color: var(--brand-2); font-weight:700;}
+    .timer{display:flex; justify-content:center; gap:22px; margin: 16px 0 8px;}
+    .timer div{
+      min-width:72px; background: rgba(20,23,32,.7); border:1px solid rgba(255,255,255,.08);
+      border-radius:12px; padding:10px 8px; text-align:center;
+    }
+    .timer span{color:#fff; font-size:1.2rem; font-weight:700;}
+    .timer p{color:#a0a7ba; font-size:.8rem; letter-spacing:1px; margin-top:2px;}
+    .cta-btn{
+      margin-top:16px; padding:14px 16px; width:auto; min-width: 60%;
+      border-radius: 12px; background: linear-gradient(90deg, var(--brand), #ff7a5c);
+      color:#fff; border:none; font-weight:700; box-shadow: 0 10px 28px rgba(243,77,77,.35);
+      transition: transform .15s ease, box-shadow .2s ease;
+      cursor:pointer;
+    }
+    .cta-btn:hover{transform: translateY(-2px); box-shadow: 0 12px 30px rgba(243,77,77,.45);}
+    .img5 img, .img52 img{border-radius: var(--radius); box-shadow: var(--shadow);}
+    @media (max-width: 900px){
+      .container5{grid-template-columns: 1fr; gap:16px;}
+    }
+  </style>
+
+  <!-- Brand Slider -->
+  <style>
+    .logo-slider{background: transparent; padding: 14px 0; margin: 20px 0; overflow:hidden;}
+    .logo-track{display:flex; width:max-content; animation: slide 28s linear infinite;}
+    .logo-track img{height: 70px; margin: 0 34px; opacity:.6; filter: grayscale(100%) contrast(1.1) brightness(1.05); transition: .2s;}
+    .logo-track img:hover{opacity:.95; filter:none; transform: translateY(-2px);}
+    @keyframes slide{0%{transform: translateX(0);}100%{transform: translateX(-50%);}}
+  </style>
+
+  <!-- Newsletter -->
+  <style>
+    .container9{
+      max-width: 1200px; margin: 30px auto; padding: 0 16px; display:grid; grid-template-columns: 1.2fr 1fr; gap: 24px; align-items:center;
+    }
+    .c9img img{width:100%; border-radius: var(--radius); box-shadow: var(--shadow);}
+    .c9head{
+      position: static; display:flex; flex-direction: column; gap: 14px; justify-content:center;
+      background: var(--card); border:1px solid rgba(255,255,255,.08); border-radius: var(--radius);
+      padding: 20px; box-shadow: var(--shadow-soft);
+    }
+    .c9head h1{margin:0; line-height:1.15; color:#fff; font-size: 1.8rem;}
+    .input-box{
+      height:54px; width:100%; border-radius:12px; border:1px solid rgba(255,255,255,.12);
+      background:#0f121a; color:#e9ecf1; padding: 0 14px; font-size: 15px; outline: none;
+    }
+    .input-box:focus{border-color: rgba(243,77,77,.5); box-shadow: 0 0 0 6px var(--ring);}
+    .sub-button{
+      height:52px; width:100%; border-radius:12px; border: none; font-weight:700; letter-spacing:.3px;
+      background: linear-gradient(90deg, var(--brand), #ff7a5c); color:#fff; cursor:pointer;
+      box-shadow: 0 8px 22px rgba(243,77,77,.35); transition: transform .15s ease, box-shadow .2s ease;
+    }
+    .sub-button:hover{transform: translateY(-2px); box-shadow: 0 12px 30px rgba(243,77,77,.45);}
+    @media (max-width: 900px){.container9{grid-template-columns:1fr;}}
+  </style>
+
+  <!-- Magazine -->
+  <style>
+    .container10{background: transparent; gap: 24px; align-items:center; padding: 24px 0 48px; display:flex; flex-direction:column;}
+    .container10 h1, .container10 h2{color:#fff;}
+    .mag1, .mag2{
+      width: 100%; max-width: 1100px; border-radius: var(--radius);
+      background: var(--card); border:1px solid rgba(255,255,255,.08); overflow:hidden;
+      display:grid; grid-template-columns: 1.2fr 1fr; gap: 10px; padding: 10px; transition: transform .18s, box-shadow .2s;
+    }
+    .mag2{grid-template-columns: 1fr 1.2fr;}
+    .mag1:hover, .mag2:hover{transform: translateY(-3px); box-shadow: var(--shadow);}
+    .magi img{width:100%; height:100%; object-fit: cover;}
+    .mag1a{padding: 18px; color:#fff; display:flex; flex-direction:column; gap:10px;}
+    .mag1a p{color: var(--muted);}
+    .mag1a1{display:flex; align-items:center; gap:10px; margin-top:8px;}
+    .mag1a1 i{background: #0f121a; border-radius: 12px; padding:10px; color: var(--brand);}
+  </style>
+
+  <!-- Footer -->
+  <style>
+    .footercontainer{background:#0b0d12; padding: 48px 16px; color:#fff;}
+    .footerhead{display:flex; justify-content:center; margin-bottom: 24px;}
+    .footerhead h1{font-size: 28px; position:relative;}
+    .footerhead h1::after{
+      content:""; display:block; height:3px; background:#ff9800; width:50%; margin:8px auto 0;
+    }
+    .footer{max-width: 1200px; margin: 0 auto; display:flex; justify-content: space-around; flex-wrap: wrap; gap:24px;}
+    .fotter1{width: 22%; min-width: 240px; transition: transform .2s;}
+    .fotter1:hover{transform: translateY(-6px);}
+    .fotter1 h3{color:#ff9800; margin-bottom:10px;}
+    .fotter1 p{color: var(--muted);}
+    .fotterimg img, .fotterimg1 img{width: 50px; margin:8px; transition:.2s; cursor:pointer;}
+    .fotterimg img:hover, .fotterimg1 img:hover{transform: scale(1.15); filter: brightness(1.2);}
+    .footer2{display:flex; align-items:center; justify-content:center; gap:8px; margin-top: 12px;}
+    .footer2 img{width:24px;}
+    .footer2 p{color: var(--muted); font-weight:700;}
+  </style>
+
+  <!-- Responsive tweaks -->
+  <style>
+    @media (max-width: 992px){
+      .page1{grid-template-columns:1fr;}
+      .container3{grid-template-columns:1fr;}
+    }
+    @media (max-width: 768px){
+      .options{flex-wrap:wrap; gap:10px;}
+      .header1 img{height:36px;}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Right Sidebar -->
+  <div class="right-sidebar">
+    <div class="sidebar-btn">
+      <svg viewBox="0 0 24 24"><polygon points="12,4 3,9 12,14 21,9 12,4"/><polygon points="3,14 12,19 21,14"/><polyline points="3,9 3,14"/></svg>
+      <span class="tooltip">Layers</span>
+    </div>
+    <div class="sidebar-btn">
+      <svg viewBox="0 0 24 24"><circle cx="7" cy="15.5" r="3.5"/><circle cx="17" cy="15.5" r="3.5"/><line x1="10.5" y1="15.5" x2="13.5" y2="15.5"/><line x1="4.5" y1="15.5" x2="7" y2="15.5"/><line x1="17" y1="15.5" x2="19.5" y2="15.5"/></svg>
+      <span class="tooltip">View</span>
+    </div>
+    <div class="sidebar-btn">
+      <svg viewBox="0 0 24 24"><rect x="4" y="7" width="16" height="13" rx="2"/><rect x="8" y="3" width="8" height="4" rx="1.5"/><line x1="8" y1="7" x2="8" y2="4"/><line x1="16" y1="7" x2="16" y2="4"/></svg>
+      <span class="tooltip">Tasks</span>
+    </div>
+    <div class="sidebar-btn">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-1m0-4a2 2 0 1 1 2-2"/></svg>
+      <span class="tooltip">Help</span>
+    </div>
+    <div class="sidebar-btn">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><ellipse cx="12" cy="12" rx="4" ry="10"/><line x1="2" y1="12" x2="22" y2="12"/></svg>
+      <span class="tooltip">Global</span>
+    </div>
+    <div class="sidebar-btn">
+      <svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="10" rx="2"/><polyline points="3,7 12,13 21,7"/></svg>
+      <span class="tooltip">Message</span>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <div class="header">
+    <div class="wrap glass elevate" data-aos="zoom-in-up">
+      <div class="header1"><img src="headlogo.png" alt="Logo"></div>
+      <div class="header2">
+        <div class="options">
+          <h3 class="nav-pill">Home</h3>
+          <h3>Women</h3>
+          <h3>Men</h3>
+          <h3>Shoes</h3>
+          <h3>Magazine</h3>
+          <img src="search.png" alt="Search">
+          <img src="add-to-cart.png" alt="Cart">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero -->
+  <div class="page1">
+    <div class="sec1" data-aos="zoom-in-right">
+      <div class="promo-card">
+        <h1>Hot New Arrivals You'll Love</h1>
+        <p>Discover the latest trends, fresh styles, and must-have pieces for the season.</p>
+        <a href="/shop-new">Shop Now
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="margin-left:2px;">
+            <path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+    <div class="sec2" data-aos="zoom-in-left">
+      <div>
+        <img src="a-vibrant-lifestyle-advertisement-featur_5RjSgFGfR-G1dIyHSFe9DQ__OXkhGOTRVmXW5DYQwrLyw.jpeg" alt="" loading="lazy">
+      </div>
+    </div>
+  </div>
+
+  <!-- Services -->
+  <div class="container2" data-aos="fade-right" data-aos-offset="300" data-aos-easing="ease-in-sine">
+    <div class="sec1">
+      <div><i class="fi fi-sr-shipping-fast"></i></div>
+      <div>
+        <h3>Next Day Shipping</h3>
+        <p>Ordered today, delivered tomorrow.</p>
+      </div>
+    </div>
+    <div class="sec2" data-aos="fade-zoom-in" data-aos-easing="ease-in-back" data-aos-delay="300" data-aos-offset="0">
+      <div><i class="fi fi-rs-shield-check"></i></div>
+      <div>
+        <h3>Secure Checkout</h3>
+        <p>Protecting customer data from payment entry to order placement.</p>
+      </div>
+    </div>
+    <div class="sec3" data-aos="fade-left" data-aos-anchor="#example-anchor" data-aos-offset="500" data-aos-duration="500">
+      <div><i class="fi fi-rr-restock"></i></div>
+      <div>
+        <h3>Free 20 Day Returns</h3>
+        <p>Return within 20 days for refund, exchange or store credit.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Split Feature -->
+  <div class="container3">
+    <div class="slide1">
+      <div data-aos="flip-left" data-aos-easing="ease-out-cubic" data-aos-duration="1000">
+        <i><img src="thought-bubble.png" alt="" loading="lazy"></i>
+        <h1 style="margin:8px 0;"><strong>This Season</strong></h1>
+        <p>Be Ready To Change</p>
+        <div style="margin-top:10px;"><h3>Shop Men</h3></div>
+      </div>
+    </div>
+    <div class="slide2">
+      <div data-aos="flip-left" data-aos-easing="ease-out-cubic" data-aos-duration="1000">
+        <img src="tshirt.jpg" alt="" loading="lazy">
+      </div>
+    </div>
+  </div>
+
+  <!-- Latest Collection -->
+  <div class="container4">
+    <div class="head4"><h1>LATEST COLLECTION</h1></div>
+    <div class="head4"><h3>DENIM DREAMS</h3></div>
+    <div class="c4img">
+      <!-- Card 1 -->
+      <div class="product-card" data-aos="fade-up-right" data-aos-duration="800">
+        <div class="img1">
+          <img src="4i.jpg" class="main-img" alt="Stripped denim dress" loading="lazy">
+          <img src="4ii.jpg" class="hover-img" alt="Stripped denim dress alt" loading="lazy">
+          <div class="quick">
+            <button title="Wishlist">❤</button>
+            <button title="Quick view">👁</button>
+            <button title="Add to cart">🛒</button>
+          </div>
+        </div>
+        <h3 class="product-desc">Stripped Denim Dress<br>Dress</h3>
+        <div class="price-row">
+          <div class="price">$49.99</div>
+          <div class="stars">★★★★★</div>
+        </div>
+      </div>
+      <!-- Card 2 -->
+      <div class="product-card" data-aos="fade-down" data-aos-duration="800">
+        <div class="img1">
+          <img src="4i2.jpg" class="main-img" alt="Stripped denim dress" loading="lazy">
+          <img src="4i22.webp" class="hover-img" alt="Stripped denim dress alt" loading="lazy">
+          <div class="quick">
+            <button title="Wishlist">❤</button>
+            <button title="Quick view">👁</button>
+            <button title="Add to cart">🛒</button>
+          </div>
+        </div>
+        <h3 class="product-desc">Stripped Denim Dress<br>Dress</h3>
+        <div class="price-row">
+          <div class="price">$59.99</div>
+          <div class="stars">★★★★☆</div>
+        </div>
+      </div>
+      <!-- Card 3 -->
+      <div class="product-card" data-aos="fade-up-right" data-aos-duration="800">
+        <div class="img1">
+          <img src="4i3.jpg" class="main-img" alt="Stripped denim dress" loading="lazy">
+          <img src="4i33.jpg" class="hover-img" alt="Stripped denim dress alt" loading="lazy">
+          <div class="quick">
+            <button title="Wishlist">❤</button>
+            <button title="Quick view">👁</button>
+            <button title="Add to cart">🛒</button>
+          </div>
+        </div>
+        <h3 class="product-desc">Stripped Denim Dress<br>Dress</h3>
+        <div class="price-row">
+          <div class="price">$54.99</div>
+          <div class="stars">★★★★★</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Deal Section -->
+  <div class="container5">
+    <div class="img5" data-aos="fade-up" data-aos-duration="800">
+      <img src="c5img.jpeg" alt="Model left" loading="lazy">
+    </div>
+    <div class="center-content" data-aos="fade-down" data-aos-duration="800">
+      <h1>Khaki Lace Up Sandals</h1>
+      <p class="subheadline">THIS MONTH'S ITEM ON <span class="highlight">MEGA SALE</span></p>
+      <div class="timer">
+        <div>
+          <span>00</span>
+          <p>WEEKS</p>
+        </div>
+        <div>
+          <span>00</span>
+          <p>DAYS</p>
+        </div>
+        <div>
+          <span>00</span>
+          <p>HOURS</p>
+        </div>
+        <div>
+          <span>00</span>
+          <p>MINUTES</p>
+        </div>
+        <div>
+          <span>00</span>
+          <p>SECONDS</p>
+        </div>
+      </div>
+      <button class="cta-btn">Grab It Till You Can</button>
+    </div>
+    <div class="img52" data-aos="fade-up" data-aos-duration="800">
+      <img src="c5img2.jpeg" alt="Model right" loading="lazy">
+    </div>
+  </div>
+
+  <!-- New Arrivals -->
+  <div class="con6head" style="display:flex; flex-direction:column; gap:6px; align-items:center;">
+    <div class="new" data-aos="zoom-in-right" data-aos-duration="700">
+      <h1>New Arrivals</h1>
+    </div>
+    <div class="mens" data-aos="zoom-in-left" data-aos-duration="700">
+      <h3>Mens Jackets</h3>
+    </div>
+  </div>
+  <div class="container6" style="overflow:hidden; display:grid; grid-template-columns:1fr 1fr; gap: 24px; align-items:center; padding: 24px 16px; max-width:1200px; margin:0 auto;">
+    <div class="sec3" data-aos="fade-up" data-aos-duration="800" style="position:relative; width:100%; height: 520px;">
+      <img src="6img (1).jpg" alt="" class="slide" style="display:block; position:absolute; inset:0; width:100%; height:100%; object-fit:cover; border-radius:20px;">
+      <img src="6img (2).jpeg" alt="" class="slide" style="display:none; position:absolute; inset:0; width:100%; height:100%; object-fit:cover; border-radius:20px;">
+      <img src="6img (3).jpg" alt="" class="slide" style="display:none; position:absolute; inset:0; width:100%; height:100%; object-fit:cover; border-radius:20px;">
+    </div>
+    <div class="sec4" data-aos="fade-down" data-aos-duration="800" style="display:flex; flex-direction:column; align-items:center; gap:10px;">
+      <div class="fire"><img src="danger.png" alt="" loading="lazy"></div>
+      <div class="experience"><h1>Experience World</h1></div>
+      <div class="look"><h3>In New Look</h3></div>
+      <div class="shop" style="width: 60%; padding: 12px; font-size:1.1rem; text-align:center; border-radius:10px; background: linear-gradient(90deg, var(--brand), #ff7a5c); color:#fff; cursor:pointer;">Shop Men</div>
+    </div>
+  </div>
+
+  <!-- Grid Products 2 -->
+  <div class="container7" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:20px; padding: 20px; max-width:1200px; margin: 0 auto;">
+    <!-- Repeatable card pattern -->
+    <div class="product-card" data-aos="fade-up" data-aos-duration="700">
+      <div class="img1">
+        <img src="img1.avif" class="main-img" alt="Product 1" loading="lazy">
+        <img src="img11.avif" class="hover-img" alt="Product 1 Hover" loading="lazy">
+        <div class="quick"><button>❤</button><button>👁</button><button>🛒</button></div>
+      </div>
+      <h3 class="product-desc">Stripped Denim Dress<br>Dress</h3>
+      <div class="price-row"><div class="price">$49.99</div><div class="stars">★★★★★</div></div>
+    </div>
+
+    <div class="product-card" data-aos="fade-up" data-aos-duration="700">
+      <div class="img1">
+        <img src="img2.avif" class="main-img" alt="Product 2" loading="lazy">
+        <img src="img22.avif" class="hover-img" alt="Product 2 Hover" loading="lazy">
+        <div class="quick"><button>❤</button><button>👁</button><button>🛒</button></div>
+      </div>
+      <h3 class="product-desc">Stripped Denim Dress<br>Dress</h3>
+      <div class="price-row"><div class="price">$52.99</div><div class="stars">★★★★☆</div></div>
+    </div>
+
+    <div class="product-card" data-aos="fade-up" data-aos-duration="700">
+      <div class="img1">
+        <img src="img3.avif" class="main-img" alt="Product 3" loading="lazy">
+        <img src="img33.avif" class="hover-img" alt="Product 3 Hover" loading="lazy">
+        <div class="quick"><button>❤</button><button>👁</button><button>🛒</button></div>
+      </div>
+      <h3 class="product-desc">Stripped Denim Dress<br>Dress</h3>
+      <div class="price-row"><div class="price">$44.99</div><div class="stars">★★★★★</div></div>
+    </div>
+
+    <div class="product-card" data-aos="fade-up" data-aos-duration="700">
+      <div class="img1">
+        <img src="img4.avif" class="main-img" alt="Product 4" loading="lazy">
+        <img src="img44.avif" class="hover-img" alt="Product 4 Hover" loading="lazy">
+        <div class="quick"><button>❤</button><button>👁</button><button>🛒</button></div>
+      </div>
+      <h3 class="product-desc">Stripped Denim Dress<br>Dress</h3>
+      <div class="price-row"><div class="price">$39.99</div><div class="stars">★★★★☆</div></div>
+    </div>
+
+    <div class="product-card" data-aos="fade-up" data-aos-duration="700">
+      <div class="img1">
+        <img src="img5.avif" class="main-img" alt="Product 5" loading="lazy">
+        <img src="img55.avif" class="hover-img" alt="Product 5 Hover" loading="lazy">
+        <div class="quick"><button>❤</button><button>👁</button><button>🛒</button></div>
+      </div>
+      <h3 class="product-desc">Stripped Denim Dress<br>Dress</h3>
+      <div class="price-row"><div class="price">$59.99</div><div class="stars">★★★★★</div></div>
+    </div>
+
+    <div class="product-card" data-aos="fade-up" data-aos-duration="700">
+      <div class="img1">
+        <img src="img6.avif" class="main-img" alt="Product 6" loading="lazy">
+        <img src="img66.avif" class="hover-img" alt="Product 6 Hover" loading="lazy">
+        <div class="quick"><button>❤</button><button>👁</button><button>🛒</button></div>
+      </div>
+      <h3 class="product-desc">Stripped Denim Dress<br>Dress</h3>
+      <div class="price-row"><div class="price">$42.99</div><div class="stars">★★★★☆</div></div>
+    </div>
+
+    <div class="product-card" data-aos="fade-up" data-aos-duration="700">
+      <div class="img1">
+        <img src="img7.avif" class="main-img" alt="Product 7" loading="lazy">
+        <img src="img77.avif" class="hover-img" alt="Product 7 Hover" loading="lazy">
+        <div class="quick"><button>❤</button><button>👁</button><button>🛒</button></div>
+      </div>
+      <h3 class="product-desc">Stripped Denim Dress<br>Dress</h3>
+      <div class="price-row"><div class="price">$48.99</div><div class="stars">★★★★★</div></div>
+    </div>
+
+    <div class="product-card" data-aos="fade-up" data-aos-duration="700">
+      <div class="img1">
+        <img src="img8.avif" class="main-img" alt="Product 8" loading="lazy">
+        <img src="img88.avif" class="hover-img" alt="Product 8 Hover" loading="lazy">
+        <div class="quick"><button>❤</button><button>👁</button><button>🛒</button></div>
+      </div>
+      <h3 class="product-desc">Stripped Denim Dress<br>Dress</h3>
+      <div class="price-row"><div class="price">$46.99</div><div class="stars">★★★★☆</div></div>
+    </div>
+  </div>
+
+  <!-- Brand Slider -->
+  <div class="logo-slider">
+    <div class="logo-track">
+      <div><img src="Alexander-McQueen-logo.png" alt="" loading="lazy"></div>
+      <div><img src="Balenciaga_Logo.png" alt="" loading="lazy"></div>
+      <div><img src="Burberry-Logo.png" alt="" loading="lazy"></div>
+      <div><img src="Chanel_logo.png" alt="" loading="lazy"></div>
+      <div><img src="CK_Calvin_Klein_logo.png" alt="" loading="lazy"></div>
+      <div><img src="Fendi_logo.png" alt="" loading="lazy"></div>
+      <div><img src="Gucci_logo.png" alt="" loading="lazy"></div>
+      <div><img src="Hermes-Logo.png" alt="" loading="lazy"></div>
+      <div><img src="Louis-Vuitton-logo.png" alt="" loading="lazy"></div>
+      <div><img src="versace-primary-logo.png" alt="" loading="lazy"></div>
+      <div><img src="ZARA-logo.png" alt="" loading="lazy"></div>
+      <!-- Repeat to create seamless loop -->
+      <div><img src="Alexander-McQueen-logo.png" alt="" loading="lazy"></div>
+      <div><img src="Balenciaga_Logo.png" alt="" loading="lazy"></div>
+      <div><img src="Burberry-Logo.png" alt="" loading="lazy"></div>
+      <div><img src="Chanel_logo.png" alt="" loading="lazy"></div>
+      <div><img src="CK_Calvin_Klein_logo.png" alt="" loading="lazy"></div>
+      <div><img src="Fendi_logo.png" alt="" loading="lazy"></div>
+      <div><img src="Gucci_logo.png" alt="" loading="lazy"></div>
+      <div><img src="Hermes-Logo.png" alt="" loading="lazy"></div>
+      <div><img src="Louis-Vuitton-logo.png" alt="" loading="lazy"></div>
+      <div><img src="versace-primary-logo.png" alt="" loading="lazy"></div>
+      <div><img src="ZARA-logo.png" alt="" loading="lazy"></div>
+    </div>
+  </div>
+
+  <!-- Newsletter -->
+  <div class="container9">
+    <div class="c9img" data-aos="zoom-out">
+      <img src="c9b.jpg" alt="" loading="lazy">
+    </div>
+    <div class="c9head" data-aos="zoom-in">
+      <div id="1"><h1>Subscribe and get 10% off</h1></div>
+      <div id="2"><h1>Our New Collection</h1></div>
+      <input class="input-box" type="email" placeholder="Enter your email">
+      <button class="sub-button">SUBSCRIBE</button>
+    </div>
+  </div>
+
+  <!-- Magazine -->
+  <div class="container10">
+    <div data-aos="fade-down" data-aos-duration="700"><h1>Our Magazine</h1></div>
+    <div data-aos="fade-down" data-aos-duration="700"><h2>READ OUR STORIES</h2></div>
+
+    <div class="mag1" data-aos="fade-left" data-aos-offset="300" data-aos-duration="700">
+      <div class="magi"><img src="C10A.jpg" alt="" loading="lazy"></div>
+      <div class="mag1a">
+        <p>BY MEGHA SHAH · 30 JUNE 2025</p>
+        <h2>Lisa Haydon: “If the only messaging of my life is that I’m good-looking, I would feel like I have failed”</h2>
+        <p>Having hung up her It-girl shoes, Lisa Haydon has built a formidable arsenal in defence of her wellbeing. Between gulps of khichdi and gasps of air, the model and actor takes Vogue India through her inner workings and ruminates on the unexpected turn her life has taken</p>
+        <div class="mag1a1"><div style="flex:1; border-bottom:1px solid rgba(255,255,255,.1);"></div><i class="fi fi-tr-comment-dots"></i></div>
+      </div>
+    </div>
+
+    <div class="mag2" data-aos="fade-right" data-aos-offset="300" data-aos-duration="700">
+      <div class="magi"><img src="c10b.jpg" alt="" loading="lazy"></div>
+      <div class="mag1a">
+        <p>BY THE BEAUTY MAGAZINE · 1991</p>
+        <h2>Akshara Grayla: “If the only messaging of my life is that I’m good-looking, Beauty & Style”</h2>
+        <p>Beauty Magazine offers information to live a beautiful life—latest luxury products, concise health studies, beauty and style trends, and innovations.</p>
+        <div class="mag1a1"><div style="flex:1; border-bottom:1px solid rgba(255,255,255,.1);"></div><i class="fi fi-tr-comment-dots"></i></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footercontainer" data-aos="fade-up" data-aos-anchor-placement="top-center">
+    <div class="footerhead"><h1>FOLLOW US</h1></div>
+    <div class="footer">
+      <div class="fotter1">
+        <h3>PAYMENT METHOD</h3>
+        <p>A payment method is how money is transferred to complete a transaction. It’s the bridge between buyer and seller.</p>
+        <div class="fotterimg">
+          <img src="paypal.png" alt="" loading="lazy">
+          <img src="cash-on-delivery.png" alt="" loading="lazy">
+          <img src="symbols.png" alt="" loading="lazy">
+          <img src="card.png" alt="" loading="lazy">
+        </div>
+        <div class="footer2">
+          <img src="lock.png" alt="" loading="lazy">
+          <p>SECURE ONLINE PAYMENT</p>
+        </div>
+      </div>
+
+      <div class="fotter1">
+        <h3>FAVOURITES</h3>
+        <p>Favourite dresses often carry personal value due to fit, comfort, occasions, or style.</p>
+        <div class="fotterimg1" style="display:flex; align-items:center; gap:12px;">
+          <div><img src="FOOTER1.jpg" width="80" alt="" loading="lazy"></div>
+          <div>
+            <h3>DENIM TRUCKER</h3>
+            <h3>JACKET</h3>
+            <p>The price is $49.99</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="fotter1">
+        <h3>SHOPPING GUIDE</h3>
+        <h3>FAQ</h3>
+        <h3>SHIPMENT</h3>
+        <h3>RETURNS</h3>
+        <h3>POLICIES</h3>
+        <h3>GIFT CARDS</h3>
+        <h3>CLOTHING CARE</h3>
+        <h3>PURCHASE CONDITIONS</h3>
+      </div>
+
+      <div class="fotter1">
+        <h3>COMPANY</h3>
+        <h3>ABOUT US</h3>
+        <h3>PRESS</h3>
+        <h3>OUR TEAM</h3>
+        <h3>OFFICES</h3>
+        <h3>AFFILIATES</h3>
+        <h3>GIVEAWAY</h3>
+        <h3>CONTACT</h3>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({ duration: 700, easing: 'ease-out', once: true, offset: 80 });
+  </script>
+
+  <!-- Simple slider for .sec3 images -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const slides = document.querySelectorAll('.sec3 .slide');
+      let currentSlide = 0;
+      function showSlide(index) {
+        slides.forEach((img, i) => { img.style.display = i === index ? 'block' : 'none'; });
+      }
+      function nextSlide() {
+        currentSlide = (currentSlide + 1) % slides.length;
+        showSlide(currentSlide);
+      }
+      showSlide(currentSlide);
+      setInterval(nextSlide, 2500);
+    });
+  </script>
+
+  <!-- Newsletter button feedback -->
+  <script>
+    document.addEventListener('DOMContentLoaded', ()=>{
+      const btn = document.querySelector('.sub-button');
+      const input = document.querySelector('.input-box');
+      btn?.addEventListener('click', ()=>{
+        if(input?.value && /\S+@\S+\.\S+/.test(input.value)){
+          const prev = btn.textContent;
+          btn.textContent = 'Subscribed ✓';
+          btn.classList.add('ring');
+          setTimeout(()=>{
+            btn.classList.remove('ring');
+            btn.textContent = prev;
+            input.value = '';
+          }, 1400);
+        }
+      });
+    });
+  </script>
+
+  <!-- Countdown -->
+  <script>
+    const targetDate = new Date();
+    targetDate.setDate(targetDate.getDate() + 7);
+    function updateTimer() {
+      const now = new Date();
+      let diff = targetDate - now;
+      if (diff <= 0) {
+        targetDate.setTime(now.getTime() + 7 * 24 * 60 * 60 * 1000);
+        diff = targetDate - now;
+      }
+      const weeks = Math.floor(diff / (1000 * 60 * 60 * 24 * 7));
+      const days = Math.floor((diff % (1000 * 60 * 60 * 24 * 7)) / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+      const timer = document.querySelector('.container5 .timer');
+      if (timer) {
+        const spans = timer.querySelectorAll('span');
+        if (spans.length >= 5) {
+          spans[0].textContent = String(weeks).padStart(2, '0');
+          spans[1].textContent = String(days).padStart(2, '0');
+          spans.textContent = String(hours).padStart(2, '0');
+          spans.textContent = String(minutes).padStart(2, '0');
+          spans.textContent = String(seconds).padStart(2, '0');
+        }
+      }
+    }
+    updateTimer();
+    setInterval(updateTimer, 1000);
+  </script>
+
+  <!-- Small perf hint -->
+  <style>
+    .product-card, .sidebar-btn, .promo-card a, .sub-button, .cta-btn{will-change: transform;}
+  </style>
+</body>
+</html>
+```
+
+Want this split into patch-style snippets instead of a full file? I can also add a light/dark theme toggle or a quick-view modal with real product data if needed.
+
+[1](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/85624575/f1d11726-620a-4e86-8a46-ee0664d6faa7/paste.txt)
